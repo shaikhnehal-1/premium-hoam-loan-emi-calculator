@@ -95,8 +95,7 @@ If you found this project useful:
 
 ## 📬 Connect With Me
 
-- GitHub: https://github.com/your-username  
-- Portfolio: (optional)
+- GitHub: https://github.com/shaikhnehal-1
 
 ---
 
