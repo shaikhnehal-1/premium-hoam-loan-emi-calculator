@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Premium Home Loan EMI Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/index.css">
+  </head>
+  <body class="bg-slate-50 font-['Inter'] text-slate-900">
+    <div id="app" class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-8">
+          <h1 class="text-4xl font-bold tracking-tight text-blue-900 mb-2">Home Loan EMI Calculator</h1>
+          <p class="text-slate-500">Plan your dream home with precision and clarity.</p>
+        </header>
+
+        <!-- Mode Toggle -->
+        <div class="flex justify-center mb-10">
+          <div class="bg-white p-1 rounded-2xl shadow-sm border border-slate-200 flex">
+            <button id="singleModeBtn" class="px-6 py-2 rounded-xl text-sm font-semibold transition-all bg-blue-600 text-white shadow-md">Single Loan</button>
+            <button id="compareModeBtn" class="px-6 py-2 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:bg-slate-50">Compare Loans</button>
+          </div>
+        </div>
+
+        <div id="calculatorGrid" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <!-- Calculator Inputs (Scenario 1) -->
+          <div id="scenario1" class="lg:col-span-7 bg-white rounded-3xl shadow-xl shadow-blue-100/50 p-8 border border-blue-50">
+            <h3 class="text-lg font-bold text-blue-900 mb-6 flex items-center">
+              <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mr-3 text-sm">1</span>
+              Loan Scenario A
+            </h3>
+            <div class="space-y-8">
+              <!-- Loan Amount -->
+              <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                  <label for="loanAmount" class="text-sm font-semibold uppercase tracking-wider text-slate-500">Loan Amount</label>
+                  <div class="flex items-center bg-blue-50 px-4 py-2 rounded-xl border border-blue-100">
+                    <span class="text-blue-600 font-bold mr-1">₹</span>
+                    <input type="text" id="loanAmountDisplay" class="bg-transparent border-none focus:ring-0 text-blue-900 font-bold w-32 text-right" value="10,00,000">
+                  </div>
+                </div>
+                <input type="range" id="loanAmount" min="100000" max="100000000" step="100000" value="1000000" class="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer accent-blue-600">
+              </div>
+
+              <!-- Tenure -->
+              <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                  <label for="tenure" class="text-sm font-semibold uppercase tracking-wider text-slate-500">Tenure (Years)</label>
+                  <div class="flex items-center bg-emerald-50 px-4 py-2 rounded-xl border border-emerald-100">
+                    <input type="number" id="tenureDisplay" class="bg-transparent border-none focus:ring-0 text-emerald-700 font-bold w-12 text-right" value="20">
+                    <span class="text-emerald-600 font-bold ml-1">Yrs</span>
+                  </div>
+                </div>
+                <input type="range" id="tenure" min="1" max="30" step="1" value="20" class="w-full h-2 bg-emerald-100 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+              </div>
+
+              <!-- Interest Rate -->
+              <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                  <label for="interestRate" class="text-sm font-semibold uppercase tracking-wider text-slate-500">Interest Rate (% P.A.)</label>
+                  <div class="flex items-center bg-sky-50 px-4 py-2 rounded-xl border border-sky-100">
+                    <input type="number" id="interestRateDisplay" step="0.1" class="bg-transparent border-none focus:ring-0 text-sky-700 font-bold w-16 text-right" value="9">
+                    <span class="text-sky-600 font-bold ml-1">%</span>
+                  </div>
+                </div>
+                <input type="range" id="interestRate" min="0.5" max="15" step="0.1" value="9" class="w-full h-2 bg-sky-100 rounded-lg appearance-none cursor-pointer accent-sky-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- Results Section (Scenario 1) -->
+          <div id="results1" class="lg:col-span-5 flex flex-col gap-6">
+            <!-- EMI Card -->
+            <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-3xl p-8 text-white shadow-2xl shadow-blue-900/20 relative overflow-hidden">
+              <div class="relative z-10">
+                <p class="text-blue-100 text-sm font-medium uppercase tracking-widest mb-2">Monthly Home Loan EMI</p>
+                <h2 id="monthlyEmi" class="text-5xl font-bold mb-6">₹8,997</h2>
+                <button id="viewScheduleBtn" class="bg-white/10 hover:bg-white/20 transition-colors px-6 py-3 rounded-xl text-sm font-semibold backdrop-blur-sm border border-white/20">
+                  Amortization Schedule
+                </button>
+              </div>
+              <div class="absolute -right-12 -top-12 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+            </div>
+
+            <!-- Breakdown Card -->
+            <div class="bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border border-slate-100 flex-grow">
+              <div class="space-y-6">
+                <div class="flex justify-between items-center pb-4 border-bottom border-slate-50">
+                  <div class="flex items-center">
+                    <div class="w-3 h-3 rounded-full bg-blue-600 mr-3"></div>
+                    <span class="text-slate-500 font-medium">Principal Amount</span>
+                  </div>
+                  <span id="totalPrincipal" class="font-bold text-slate-900">₹10,00,000</span>
+                </div>
+                <div class="flex justify-between items-center pb-4 border-bottom border-slate-50">
+                  <div class="flex items-center">
+                    <div class="w-3 h-3 rounded-full bg-emerald-500 mr-3"></div>
+                    <span class="text-slate-500 font-medium">Interest Amount</span>
+                  </div>
+                  <span id="totalInterest" class="font-bold text-slate-900">₹11,59,342</span>
+                </div>
+                <div class="pt-4 border-t border-slate-100">
+                  <div class="flex justify-between items-center">
+                    <span class="text-slate-900 font-bold">Total Payable</span>
+                    <span id="totalPayable" class="text-xl font-extrabold text-blue-900">₹21,59,342</span>
+                  </div>
+                </div>
+                <div class="pt-6 flex justify-center">
+                  <div id="chart" class="w-full h-48"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scenario 2 (Hidden by default) -->
+          <div id="scenario2" class="hidden lg:col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
+            <!-- Inputs Scenario B -->
+            <div class="bg-white rounded-3xl shadow-xl shadow-blue-100/50 p-8 border border-blue-50">
+              <h3 class="text-lg font-bold text-blue-900 mb-6 flex items-center">
+                <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center mr-3 text-sm">2</span>
+                Loan Scenario B
+              </h3>
+              <div class="space-y-8">
+                <div class="space-y-4">
+                  <div class="flex justify-between items-center">
+                    <label class="text-sm font-semibold uppercase tracking-wider text-slate-500">Loan Amount</label>
+                    <div class="flex items-center bg-blue-50 px-4 py-2 rounded-xl border border-blue-100">
+                      <span class="text-blue-600 font-bold mr-1">₹</span>
+                      <input type="text" id="loanAmountDisplay2" class="bg-transparent border-none focus:ring-0 text-blue-900 font-bold w-32 text-right" value="15,00,000">
+                    </div>
+                  </div>
+                  <input type="range" id="loanAmount2" min="100000" max="100000000" step="100000" value="1500000" class="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                </div>
+                <div class="space-y-4">
+                  <div class="flex justify-between items-center">
+                    <label class="text-sm font-semibold uppercase tracking-wider text-slate-500">Tenure (Years)</label>
+                    <div class="flex items-center bg-emerald-50 px-4 py-2 rounded-xl border border-emerald-100">
+                      <input type="number" id="tenureDisplay2" class="bg-transparent border-none focus:ring-0 text-emerald-700 font-bold w-12 text-right" value="15">
+                      <span class="text-emerald-600 font-bold ml-1">Yrs</span>
+                    </div>
+                  </div>
+                  <input type="range" id="tenure2" min="1" max="30" step="1" value="15" class="w-full h-2 bg-emerald-100 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                </div>
+                <div class="space-y-4">
+                  <div class="flex justify-between items-center">
+                    <label class="text-sm font-semibold uppercase tracking-wider text-slate-500">Interest Rate</label>
+                    <div class="flex items-center bg-sky-50 px-4 py-2 rounded-xl border border-sky-100">
+                      <input type="number" id="interestRateDisplay2" step="0.1" class="bg-transparent border-none focus:ring-0 text-sky-700 font-bold w-16 text-right" value="8.5">
+                      <span class="text-sky-600 font-bold ml-1">%</span>
+                    </div>
+                  </div>
+                  <input type="range" id="interestRate2" min="0.5" max="15" step="0.1" value="8.5" class="w-full h-2 bg-sky-100 rounded-lg appearance-none cursor-pointer accent-sky-500">
+                </div>
+              </div>
+            </div>
+
+            <!-- Comparison Results Card -->
+            <div class="bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border border-slate-100">
+              <h3 class="text-lg font-bold text-blue-900 mb-6">Comparison Summary</h3>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                  <thead>
+                    <tr class="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100">
+                      <th class="pb-4">Metric</th>
+                      <th class="pb-4">Scenario A</th>
+                      <th class="pb-4">Scenario B</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-sm">
+                    <tr class="border-b border-slate-50">
+                      <td class="py-4 text-slate-500 font-medium">Monthly EMI</td>
+                      <td id="compEmi1" class="py-4 font-bold text-blue-600">₹8,997</td>
+                      <td id="compEmi2" class="py-4 font-bold text-emerald-600">₹14,775</td>
+                    </tr>
+                    <tr class="border-b border-slate-50">
+                      <td class="py-4 text-slate-500 font-medium">Total Interest</td>
+                      <td id="compInt1" class="py-4 font-bold text-slate-900">₹11,59,342</td>
+                      <td id="compInt2" class="py-4 font-bold text-slate-900">₹11,59,500</td>
+                    </tr>
+                    <tr>
+                      <td class="py-4 text-slate-500 font-medium">Total Payable</td>
+                      <td id="compTotal1" class="py-4 font-bold text-slate-900">₹21,59,342</td>
+                      <td id="compTotal2" class="py-4 font-bold text-slate-900">₹26,59,500</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="mt-8 pt-6 border-t border-slate-100">
+                <p id="comparisonInsight" class="text-sm text-slate-500 italic leading-relaxed">
+                  Scenario A has a lower monthly commitment, but Scenario B saves you ₹X in interest over the long term.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Amortization Schedule Section -->
+        <div id="scheduleSection" class="mt-12 bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+          <div class="p-8 border-b border-slate-100 flex justify-between items-center">
+            <div>
+              <h3 class="text-xl font-bold text-blue-900">Amortization Schedule</h3>
+              <p class="text-sm text-slate-500 mt-1">Detailed monthly breakdown of your loan repayment.</p>
+            </div>
+            <button id="downloadSchedule" class="text-blue-600 font-semibold text-sm hover:text-blue-700">Export CSV</button>
+          </div>
+          <div class="overflow-x-auto max-h-[600px] overflow-y-auto">
+            <table class="w-full text-left border-collapse">
+              <thead class="sticky top-0 bg-slate-50 z-20">
+                <tr class="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  <th class="p-4 border-b border-slate-200">Month</th>
+                  <th class="p-4 border-b border-slate-200">Principal (A)</th>
+                  <th class="p-4 border-b border-slate-200">Interest (B)</th>
+                  <th class="p-4 border-b border-slate-200">Total (A+B)</th>
+                  <th class="p-4 border-b border-slate-200">Balance</th>
+                </tr>
+              </thead>
+              <tbody id="scheduleBody" class="text-sm text-slate-600 divide-y divide-slate-50">
+                <!-- Rows injected by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D3.js for Chart -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script type="module" src="/src/script.js"></script>
+  </body>
+</html>
+
