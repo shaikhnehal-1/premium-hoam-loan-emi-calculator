@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="https://your-live-link.com"><b>🚀 Live Demo</b></a>
+  <a href="https://shaikhnehal-1.github.io/premium-hoam-loan-emi-calculator/"><b>🚀 Live Demo</b></a>
 </p>
 
 ---
@@ -71,7 +71,7 @@ home loan calculator India, EMI calculator, mortgage calculator, housing loan EM
 
 ## 📸 Preview
 
-<img src="YOUR_SCREENSHOT_LINK" alt="Home Loan EMI Calculator UI" width="100%"/>
+<img src="https://shaikhnehal-1.github.io/premium-hoam-loan-emi-calculator/" alt="Home Loan EMI Calculator UI" width="100%"/>
 
 ---
 
